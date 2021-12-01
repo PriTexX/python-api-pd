@@ -2,4 +2,5 @@ fastapi
 requests
 bs4
 fake-useragent
+uvicorn
 gunicorn
