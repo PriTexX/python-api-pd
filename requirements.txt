@@ -1,6 +1,7 @@
-fastapi
-requests
-bs4
-fake-useragent
+fastapi~=0.72.0
+requests~=2.27.1
+bs4~=0.0.1
 uvicorn
 gunicorn
+pydantic~=1.9.0
+beautifulsoup4~=4.10.0

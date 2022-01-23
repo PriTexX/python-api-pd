@@ -1,3 +1,13 @@
+DAYS_OF_THE_WEEK = {
+    'Mon': 'Monday',
+    'Tue': 'Tuesday',
+    'Wed': 'Wednesday',
+    'Thu': 'Thursday',
+    'Fri': 'Friday',
+    'Sat': 'Saturday',
+    'Sun': 'Sunday',
+}
+
 MONTHS = {
     'Янв': 1,
     'Фев': 2,
@@ -12,9 +22,3 @@ MONTHS = {
     'Ноя': 11,
     'Дек': 12,
 }
-
-
-def getMonth(monthNum: int) -> str:
-    for k, v in MONTHS.items():
-        if v == monthNum:
-            return k
