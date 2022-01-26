@@ -3,7 +3,7 @@ from datetime import datetime
 import requests
 import json
 import calendar
-from Constants import DAYS_OF_THE_WEEK, MONTHS
+from Constants import MONTHS, DAYS_OF_THE_WEEK_RU, DAYS_OF_THE_WEEK_SHORT
 import re
 
 schedule = None
@@ -37,6 +37,8 @@ def findLessons(date: Date):
 
     day = calendar.day_name[date.weekday()]
     pairs['day'] = day
+    pairs['day_ru'] = DAYS_OF_THE_WEEK_RU[day]
+    pairs['day_short'] = DAYS_OF_THE_WEEK_SHORT[day]
 
     if day == 'Sunday':
         return pairs
@@ -51,7 +53,10 @@ def parseSessionSchedule(token):
     session = getScheduleSession(token)
 
     for date in session.keys():
-        session[date]['day'] = calendar.day_name[datetime.strptime(date, '%Y-%m-%d').weekday()]
+        dayName = calendar.day_name[datetime.strptime(date, '%Y-%m-%d').weekday()]
+        session[date]['day'] = dayName
+        session[date]['day_ru'] = DAYS_OF_THE_WEEK_RU[dayName]
+        session[date]['day_short'] = DAYS_OF_THE_WEEK_SHORT[dayName]
     return session
 
 

@@ -1,21 +1,17 @@
-from fastapi import FastAPI, HTTPException
-from pydantic import BaseModel
+from fastapi import FastAPI, HTTPException, Request
 from userInfo import login, getUserInfo
 from schedule import parseSchedule
+from models import Credentials
+from exceptions import FailedToLoginException
+from exceptionHandlers import failedToLoginHandler
 
 app = FastAPI(title="Lk app API")
 
 
-class Credentials(BaseModel):
-    login: str
-    password: str
-
-
 @app.post("/getUserInfo")
-async def getUserInfo(creds: Credentials):
-    token = login(credentials=creds)
-    user = getUserInfo(token)
-
+async def UserInfo(creds: Credentials):
+    token = await login(credentials=creds)
+    user = await getUserInfo(token)
     return user
 
 
@@ -23,3 +19,8 @@ async def getUserInfo(creds: Credentials):
 async def getSchedule(token: str):
     schedule = parseSchedule(token)
     return schedule
+
+
+@app.exception_handler(FailedToLoginException)
+async def loginHandler(request: Request, exc: FailedToLoginException):
+    return await failedToLoginHandler(request, exc)

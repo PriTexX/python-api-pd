@@ -1,28 +1,27 @@
 import requests
-import re
-import json
+from exceptions import FailedToLoginException
+from models import Credentials
 
 
-def login(credentials):
-    session = requests.Session()
-    resp = session.post("https://e.mospolytech.ru/old/lk_api.php", data={
+async def login(credentials: Credentials):
+    resp = requests.post("https://e.mospolytech.ru/old/lk_api.php", data={
         'ulogin': credentials.login,
         'upassword': credentials.password,
     }, verify=False)
 
     if resp.status_code == 400:
-        raise Exception("Неверно указан логин или пароль")
+        raise FailedToLoginException("Неверно указан логин или пароль")
 
-    return json.loads(resp.content)['token']
+    return resp.json()['token']
 
 
-def getUserInfo(token):
+async def getUserInfo(token):
     userInfo = requests.get(
         f"https://e.mospolytech.ru/old/lk_api.php/?getUser&token={token}",
         verify=False
-    ).content
+    ).json()
 
-    user = json.loads(userInfo.decode('unicode_escape'))['user']
+    user = userInfo['user']
     user['token'] = token
 
     return user

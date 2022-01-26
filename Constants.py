@@ -1,11 +1,21 @@
-DAYS_OF_THE_WEEK = {
-    'Mon': 'Monday',
-    'Tue': 'Tuesday',
-    'Wed': 'Wednesday',
-    'Thu': 'Thursday',
-    'Fri': 'Friday',
-    'Sat': 'Saturday',
-    'Sun': 'Sunday',
+DAYS_OF_THE_WEEK_RU = {
+    'Monday': "Понедельник",
+    'Tuesday': "Вторник",
+    'Wednesday': "Среда",
+    'Thursday': "Четверг",
+    'Friday': "Пятница",
+    'Saturday': "Суббота",
+    'Sunday': "Воскресенье",
+}
+
+DAYS_OF_THE_WEEK_SHORT = {
+    'Monday': "Пн",
+    'Tuesday': "Вт",
+    'Wednesday': "Ср",
+    'Thursday': "Чт",
+    'Friday': "Пт",
+    'Saturday': "Сб",
+    'Sunday': "Вс",
 }
 
 MONTHS = {
