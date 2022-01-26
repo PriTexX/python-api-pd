@@ -1,4 +1,5 @@
-from fastapi import FastAPI, HTTPException, Request
+from fastapi import FastAPI, Request
+from fastapi.responses import JSONResponse
 from userInfo import login, getUserInfo
 from schedule import parseSchedule
 from models import Credentials
@@ -18,7 +19,7 @@ async def UserInfo(creds: Credentials):
 @app.get("/getScheduleForYear")
 async def get_schedule(token: str):
     schedule = parseSchedule(token)
-    return schedule
+    return JSONResponse(content=schedule, headers={'Access-Control-Allow-Origin': '*'})
 
 
 @app.exception_handler(FailedToLoginException)
