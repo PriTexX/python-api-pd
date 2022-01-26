@@ -19,7 +19,12 @@ async def UserInfo(creds: Credentials):
 @app.get("/getScheduleForYear")
 async def get_schedule(token: str):
     schedule = parseSchedule(token)
-    return JSONResponse(content=schedule, headers={'Access-Control-Allow-Origin': '*'})
+    headers = {
+        'Access-Control-Allow-Credentials': 'true',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'POST GET',
+    }
+    return JSONResponse(content=schedule, headers=headers)
 
 
 @app.exception_handler(FailedToLoginException)
