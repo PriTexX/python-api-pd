@@ -5,13 +5,18 @@ import json
 import calendar
 from Constants import MONTHS, DAYS_OF_THE_WEEK_RU, DAYS_OF_THE_WEEK_SHORT
 import re
+from exceptions import NoDataFromServer
 
 schedule = None
 
 
 def getSchedule(token):
-    Schedule = requests.get(f"https://e.mospolytech.ru/old/lk_api.php/?getSchedule&token={token}", verify=False)
-    return json.loads(Schedule.content.decode('utf8'))
+    response = requests.get(f"https://e.mospolytech.ru/old/lk_api.php/?getSchedule&token={token}", verify=False).json()
+
+    if not response:
+        raise NoDataFromServer('No schedule data available')
+
+    return response
 
 
 def getScheduleSession(token):
@@ -62,8 +67,13 @@ def parseSessionSchedule(token):
 
 def parseSchedule(token):
     global schedule
-    schedule = getSchedule(token)
     yearSchedule = {**parseSessionSchedule(token)}
+
+    try:
+        schedule = getSchedule(token)
+    except NoDataFromServer:
+        return yearSchedule
+
     Calendar = calendar.Calendar()
     today = Date.today()
 

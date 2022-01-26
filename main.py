@@ -1,29 +1,5 @@
 import requests
-from fake_useragent import UserAgent
-import re
-from weekParser import parseWeek
 
+resp = requests.get('http://pd-scripts.herokuapp.com/getScheduleForYear&token=d%2BOECWrwh4sVizxuOf6A3zhCrXz2XGtx5jzAtKabSewJmCJs9HQq6TC61qiEtfnCKB1QjAWeLOA0b0aPIFi%2BE%2ByxUeHElWc1pxlKNjW5Ef1%2FYQGPU895dPsJl6PKnt5YvNqsUBCi%2BPyZwYaK%2FPPUI8KQi5IuwK1ctRpGUtw9Lqg%3D')
 
-def getGroupToken():
-    resp = session.get("https://e.mospolytech.ru/?p=rasp")
-    pattern = '''\('.{0,}'\)\+"&token=.{0,}"'''
-    group_token = re.search(pattern, resp.text).group()
-    token = re.search('(?<=&token=).+(?=")', group_token).group()
-    group = re.search("(?<=\(').{7,}(?='\))", group_token).group()
-    return group, token
-
-
-def getSchedule(group, token):
-    rasp = session.get(f"https://rasp.dmami.ru/site/group-html?group={group}&token={token}")
-    if rasp.status_code == 200:
-        return rasp.text
-    else:
-        print("error")
-
-if __name__ == "__main__":
-    session = login()
-    group, token = getGroupToken()
-    schedule = getSchedule(group, token)
-    parseWeek(schedule)
-
-
+print(resp.content)

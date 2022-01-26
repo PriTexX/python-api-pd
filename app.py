@@ -16,7 +16,7 @@ async def UserInfo(creds: Credentials):
 
 
 @app.get("/getScheduleForYear")
-async def getSchedule(token: str):
+async def get_schedule(token: str):
     schedule = parseSchedule(token)
     return schedule
 
