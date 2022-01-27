@@ -3,10 +3,10 @@ from exceptions import FailedToLoginException
 from models import Credentials
 
 
-async def login(credentials: Credentials):
+async def login(credentials):
     resp = requests.post("https://e.mospolytech.ru/old/lk_api.php", data={
-        'ulogin': credentials.login,
-        'upassword': credentials.password,
+        'ulogin': credentials['login'],
+        'upassword': credentials['password'],
     }, verify=False)
 
     if resp.status_code == 400:

@@ -5,19 +5,30 @@ from schedule import parseSchedule
 from models import Credentials
 from exceptions import FailedToLoginException
 from exceptionHandlers import failedToLoginHandler
+from typing import Dict, Any
 
 app = FastAPI(title="Lk app API")
 
 
 @app.post("/getUserInfo")
-async def UserInfo(creds: Credentials):
-    token = await login(credentials=creds)
+async def UserInfo(creds: Request):
+    credentials = await creds.json()
+
+    token = await login(credentials=credentials)
     user = await getUserInfo(token)
     headers = {
         'Access-Control-Allow-Credentials': 'true',
         'Access-Control-Allow-Origin': '*',
     }
     return JSONResponse(content=user, headers=headers)
+
+
+# @app.options("/getUserInfo")
+# async def sendBackCORS():
+#     return JSONResponse(headers={
+#         'Access-Control-Allow-Credentials': 'true',
+#         'Access-Control-Allow-Origin': '*',
+#     })
 
 
 @app.get("/getScheduleForYear")
