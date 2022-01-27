@@ -13,16 +13,18 @@ app = FastAPI(title="Lk app API")
 async def UserInfo(creds: Credentials):
     token = await login(credentials=creds)
     user = await getUserInfo(token)
-    return user
+    headers = {
+        'Access-Control-Allow-Credentials': 'true',
+        'Access-Control-Allow-Origin': '*',
+    }
+    return JSONResponse(content=user, headers=headers)
 
 
 @app.get("/getScheduleForYear")
 async def get_schedule(token: str):
     schedule = parseSchedule(token)
     headers = {
-        'Access-Control-Allow-Credentials': 'true',
         'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'POST GET',
     }
     return JSONResponse(content=schedule, headers=headers)
 
