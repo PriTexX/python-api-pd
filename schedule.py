@@ -20,8 +20,8 @@ def getSchedule(token):
 
 
 def getScheduleSession(token):
-    ScheduleSession = requests.get(f"https://e.mospolytech.ru/old/lk_api.php/?getSchedule&session=1&token={token}", verify=False)
-    return json.loads(ScheduleSession.content.decode('utf8'))
+    ScheduleSession = requests.get(f"https://e.mospolytech.ru/old/lk_api.php/?getSchedule&session=1&token={token}", verify=False).json()
+    return ScheduleSession
 
 
 def checkDay(lesson, date: Date):
