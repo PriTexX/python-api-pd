@@ -62,12 +62,14 @@ def parseSessionSchedule(token):
         session[date]['day'] = dayName
         session[date]['day_ru'] = DAYS_OF_THE_WEEK_RU[dayName]
         session[date]['day_short'] = DAYS_OF_THE_WEEK_SHORT[dayName]
+
     return session
 
 
 def parseSchedule(token):
     global schedule
-    yearSchedule = {**parseSessionSchedule(token)}
+    yearSchedule = parseSessionSchedule(token)
+    yearScheduleArray = []
 
     try:
         schedule = getSchedule(token)
@@ -92,4 +94,8 @@ def parseSchedule(token):
         for date in Calendar.itermonthdates(secondSemesterYear, month):
             yearSchedule[str(date)] = yearSchedule.get(str(date), findLessons(date))
 
-    return yearSchedule
+    for date, pairs in yearSchedule.items():
+        pairs['date'] = date
+        yearScheduleArray.append(pairs)
+    response = {'year': yearScheduleArray}
+    return response
